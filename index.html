@@ -165,7 +165,7 @@ function initHeroOrganelleAnimation(){
       setPair(current,next);
       front.style.opacity='1';
       back.style.opacity='0';
-      travel.style.transform='translateY('+lift+'px) translateZ('+distance+'px) scale('+scale+') rotateZ('+twist+'deg)';
+      travel.style.transform='translateY('+lift+'px) translateZ('+distance+'px) scale('+scale+')';
       travel.style.filter='none';
       pulse.style.opacity='0';
       pulse.style.transform='translate(-50%,-50%) scale(1)';
@@ -176,7 +176,7 @@ function initHeroOrganelleAnimation(){
       setPair(next,after);
       front.style.opacity='1';
       back.style.opacity='0';
-      travel.style.transform='translateY('+lift+'px) translateZ('+distance+'px) scale('+scale+') rotateZ('+twist+'deg)';
+      travel.style.transform='translateY('+lift+'px) translateZ('+distance+'px) scale('+scale+')';
       travel.style.filter='none';
       pulse.style.opacity='0';
       pulse.style.transform='translate(-50%,-50%) scale(1)';
@@ -186,16 +186,15 @@ function initHeroOrganelleAnimation(){
       setPair(current,next);
       const q=(local-transStart)/(transEnd-transStart);
       const energy=Math.sin(Math.PI*q);
-      const squeeze=.09 + .91*Math.abs(Math.cos(Math.PI*q));
-      const fadeFront=q<.5 ? 1 : Math.max(0,1-(q-.5)/.18);
-      const fadeBack=q>.5 ? Math.min(1,(q-.5)/.18) : 0;
+      /* Crossfade only: no rotateX/rotateY/rotateZ/scaleX on the image plane. */
+      const fadeFront=Math.max(0,1-q);
+      const fadeBack=Math.max(0,q);
       front.style.opacity=String(fadeFront);
       back.style.opacity=String(fadeBack);
-      /* Switch at the front without the extra rotation */
-      travel.style.transform='translateY('+(lift-6*energy)+'px) translateZ('+(distance+60*energy)+'px) scale('+(scale+.05*energy)+') scaleX('+squeeze+')';
-      travel.style.filter='brightness('+(1+energy*.08).toFixed(2)+')';
-      pulse.style.opacity=(energy*.78).toFixed(2);
-      pulse.style.transform='translate(-50%,-50%) scale('+(1+energy*2.7).toFixed(2)+')';
+      travel.style.transform='translateY('+(lift-5*energy)+'px) translateZ('+(distance+48*energy)+'px) scale('+(scale+.035*energy)+')';
+      travel.style.filter='brightness('+(1+energy*.06).toFixed(2)+')';
+      pulse.style.opacity=(energy*.55).toFixed(2);
+      pulse.style.transform='translate(-50%,-50%) scale('+(1+energy*2.0).toFixed(2)+')';
       label.textContent=q<.5 ? states[current].label : states[next].label;
       updateDots(q<.5 ? current : next);
     }
