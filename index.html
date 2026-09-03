@@ -53,7 +53,7 @@ main{min-height:calc(100vh - 174px)}.tab-panel{display:none;animation:fade .22s 
 .lightbox-prev{left:20px}.lightbox-next{right:20px}
 .lightbox-counter{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);padding:8px 13px;border-radius:999px;background:rgba(255,255,255,.12);color:#fff;font-size:.8rem;font-weight:800;border:1px solid rgba(255,255,255,.18)}
 .publications-page{background:var(--navy);color:#fff;min-height:calc(100vh - 174px)}.publications-page .page-title{color:#fff}.publications-page .intro{color:#c2d1dc}.pubtop{display:flex;justify-content:space-between;gap:25px;align-items:end}.orcid{border:1px solid rgba(255,255,255,.2);padding:11px 16px;border-radius:999px;color:#d8e9ef;font-size:.83rem;font-weight:800;white-space:nowrap}.years{margin-top:44px}.pub-year{display:grid;grid-template-columns:85px 1fr;gap:18px;border-top:1px solid rgba(255,255,255,.13);padding:24px 0}.pub-year h3{color:#7fd3d0;font-size:1rem;margin:3px 0}.pub-list{display:grid;gap:10px}.pub{display:block;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:18px 20px;transition:background .18s ease,border-color .18s ease,transform .18s ease}.pub:hover{background:rgba(255,255,255,.09);border-color:rgba(127,211,208,.42);transform:translateY(-1px)}.pub h4{margin:0 0 8px;font-size:1rem;line-height:1.38}.pub h4::after{content:" ↗";color:#7fd3d0;font-weight:900}.authors{margin:0 0 6px;color:#d3dfe7;font-size:.86rem}.meta{margin:0;color:#9fb3c1;font-size:.82rem}
-.join-grid,.contact-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center;margin-top:46px}.join-card,.contact-card{border:1px solid var(--line);border-radius:26px;background:linear-gradient(145deg,#fff2eb,#eef9f8);padding:34px}.join-card h3,.contact-card h3{color:var(--navy);margin-top:0}.mail{color:var(--blue);font-weight:850}
+.join-grid,.contact-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:stretch;margin-top:46px}.join-card,.contact-card{border:1px solid var(--line);border-radius:26px;background:linear-gradient(145deg,#fff2eb,#eef9f8);padding:34px}.join-card h3,.contact-card h3{color:var(--navy);margin-top:0}.mail{color:var(--blue);font-weight:850}.contact-map{border:1px solid var(--line);border-radius:26px;overflow:hidden;background:#fff;box-shadow:0 12px 34px rgba(31,73,104,.08);min-height:390px}.contact-map iframe{display:block;width:100%;height:100%;min-height:390px;border:0}.direction-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.direction-links a{display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--navy);font-size:.84rem;font-weight:850}.direction-links a:hover{border-color:rgba(44,120,165,.32);box-shadow:0 6px 18px rgba(31,73,104,.08)}
 .funding{margin:0 auto 72px;padding:38px 40px;border:1px solid var(--line);border-radius:26px;background:rgba(255,255,255,.82);box-shadow:0 14px 42px rgba(31,73,104,.07);display:grid;grid-template-columns:1fr auto;gap:44px;align-items:center}.funding-copy h2{margin:0 0 14px;color:var(--navy);font-size:clamp(2.35rem,3.8vw,3.9rem);line-height:.98;letter-spacing:-.045em}.funding-copy p{margin:0;color:var(--muted);font-size:1.05rem;max-width:620px}.funders{display:flex;align-items:center;gap:34px}.funder{display:flex;align-items:center;justify-content:center;min-width:150px}.funder img{display:block;object-fit:contain;max-width:180px}.funder.isf img{height:66px;width:auto}.funder.bsf img{height:84px;width:auto}
 footer{border-top:1px solid var(--line);background:var(--cream)}.foot{min-height:96px;display:flex;align-items:center;justify-content:space-between;gap:18px;color:#758897;font-size:.82rem}.footbrand{display:flex;align-items:center;gap:10px}.footbrand img{width:52px;height:52px;object-fit:contain}.footlinks{display:flex;gap:16px}.foot a{color:var(--blue);font-weight:750}
 @media(max-width:980px){.albums{grid-template-columns:repeat(2,minmax(0,1fr))}.research-feature.peroxisome-feature,.research-main{grid-template-columns:1fr}.research-visual{min-height:300px}.research-visual img{min-height:300px}.research-tags{grid-template-columns:repeat(2,minmax(0,1fr))}.funding{grid-template-columns:1fr;text-align:center}.funding-copy p{margin-left:auto;margin-right:auto}.funders{justify-content:center}.head{align-items:flex-start;padding:12px 0;flex-direction:column}.tabs{width:100%}.hero{grid-template-columns:1fr;text-align:center}.lead{margin-left:auto;margin-right:auto}.actions{justify-content:center}.people-grid{grid-template-columns:repeat(2,1fr)}.join-grid,.contact-grid{grid-template-columns:1fr}.pubtop{align-items:flex-start;flex-direction:column}.album-head{align-items:flex-start;flex-direction:column}.album-count{align-self:flex-start}}
@@ -468,7 +468,35 @@ footer{border-top:1px solid var(--line);background:var(--cream)}.foot{min-height
 </section>
 
 <section id="join" class="tab-panel" role="tabpanel"><div class="wrap page"><p class="eyebrow">JOIN US</p><h2 class="page-title">Come ask organelle questions with us.</h2><div class="join-grid"><div><p class="intro">We welcome inquiries from motivated MSc and PhD students, postdoctoral researchers and other scientists interested in organelle biology, stress responses, <em>C. elegans</em>, mitochondria or peroxisomes.</p></div><div class="join-card"><h3>Interested in joining?</h3><p>Send a short introduction, your scientific interests and a CV.</p><a class="button primary" href="mailto:tomers@ekmd.huji.ac.il">Email the lab</a></div></div></div></section>
-<section id="contact" class="tab-panel" role="tabpanel"><div class="wrap page"><p class="eyebrow">CONTACT</p><h2 class="page-title">Find us in Jerusalem.</h2><div class="contact-grid"><div><p class="intro">Department of Biochemistry & Molecular Biology · Faculty of Medicine · Hebrew University of Jerusalem.</p></div><div class="contact-card"><h3>Shpilka Lab</h3><p>Butner Building · First floor · Room 127<br>Hadassah Ein Kerem campus<br>Jerusalem 9112102 · Israel</p><p><strong>Lab:</strong> <a class="mail" href="tel:+97226757348">+972 2 675 7348</a><br><strong>Office:</strong> <a class="mail" href="tel:+97226758283">+972 2 675 8283</a></p><a class="mail" href="mailto:tomers@ekmd.huji.ac.il">tomers@ekmd.huji.ac.il</a></div></div></div></section>
+<section id="contact" class="tab-panel" role="tabpanel">
+  <div class="wrap page">
+    <p class="eyebrow">CONTACT</p>
+    <h2 class="page-title">Find us in Jerusalem.</h2>
+    <p class="intro">Department of Biochemistry & Molecular Biology · Faculty of Medicine · Hebrew University of Jerusalem.</p>
+
+    <div class="contact-grid">
+      <div class="contact-map" aria-label="Map showing the Shpilka Lab at Hadassah Ein Kerem">
+        <iframe
+          title="Shpilka Lab location"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=Butner%20Building%2C%20Hadassah%20Ein%20Kerem%2C%20Jerusalem%2C%20Israel&output=embed">
+        </iframe>
+      </div>
+
+      <div class="contact-card">
+        <h3>Shpilka Lab</h3>
+        <p>Butner Building · First floor · Room 127<br>Hadassah Ein Kerem campus<br>Jerusalem 9112102 · Israel</p>
+        <p><strong>Lab:</strong> <a class="mail" href="tel:+97226757348">+972 2 675 7348</a><br><strong>Office:</strong> <a class="mail" href="tel:+97226758283">+972 2 675 8283</a></p>
+        <a class="mail" href="mailto:tomers@ekmd.huji.ac.il">tomers@ekmd.huji.ac.il</a>
+        <div class="direction-links">
+          <a href="https://www.google.com/maps/search/?api=1&query=Butner%20Building%2C%20Hadassah%20Ein%20Kerem%2C%20Jerusalem%2C%20Israel" target="_blank" rel="noopener">Google Maps ↗</a>
+          <a href="https://www.waze.com/ul?q=Butner%20Building%20Hadassah%20Ein%20Kerem%20Jerusalem&navigate=yes" target="_blank" rel="noopener">Waze ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 
 <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Photo viewer">
@@ -605,5 +633,6 @@ window.addEventListener('hashchange',()=>showTab(location.hash.slice(1),false));
 showTab(location.hash.slice(1)||'home',false);
 document.getElementById('year').textContent=new Date().getFullYear();
 </script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "215d533a641b4d8082b6814ef64409b1"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
