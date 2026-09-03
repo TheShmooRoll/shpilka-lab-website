@@ -271,6 +271,29 @@ footer{border-top:1px solid var(--line);background:var(--cream)}.foot{min-height
             <button class="album-open-link" type="button" onclick="openAlbum('posters')">Open album →</button>
           </div>
         </article>
+
+        <article class="album-card">
+          <button class="album-open" type="button" onclick="openAlbum('moments')" aria-label="Open Lab Moments album">
+            <span class="album-kicker">AROUND THE LAB · 2026</span>
+            <span class="album-title">Lab Moments</span>
+            <span class="album-desc">Everyday moments, celebrations and time together in the Shpilka Lab.</span>
+          </button>
+
+          <div class="album-strip" aria-label="Scroll through Lab Moments photos">
+            <button class="album-thumb" type="button" data-album="moments" data-photo="0" aria-label="Open Lab Moments photo 1"><img loading="lazy" src="lab-life-moments-01.jpg" alt="Shpilka Lab moment"></button>
+            <button class="album-thumb" type="button" data-album="moments" data-photo="1" aria-label="Open Lab Moments photo 2"><img loading="lazy" src="lab-life-moments-02.jpg" alt="Shpilka Lab moment"></button>
+            <button class="album-thumb" type="button" data-album="moments" data-photo="2" aria-label="Open Lab Moments photo 3"><img loading="lazy" src="lab-life-moments-03.jpg" alt="Shpilka Lab moment"></button>
+            <button class="album-thumb" type="button" data-album="moments" data-photo="3" aria-label="Open Lab Moments photo 4"><img loading="lazy" src="lab-life-moments-04.jpg" alt="Shpilka Lab moment"></button>
+            <button class="album-thumb" type="button" data-album="moments" data-photo="4" aria-label="Open Lab Moments photo 5"><img loading="lazy" src="lab-life-moments-05.jpg" alt="Shpilka Lab moment"></button>
+            <button class="album-thumb" type="button" data-album="moments" data-photo="5" aria-label="Open Lab Moments photo 6"><img loading="lazy" src="lab-life-moments-06.jpg" alt="Shpilka Lab moment"></button>
+            <button class="album-thumb" type="button" data-album="moments" data-photo="6" aria-label="Open Lab Moments photo 7"><img loading="lazy" src="lab-life-moments-07.jpg" alt="Shpilka Lab moment"></button>
+          </div>
+
+          <div class="album-footer">
+            <span>7 photos · scroll above</span>
+            <button class="album-open-link" type="button" onclick="openAlbum('moments')">Open album →</button>
+          </div>
+        </article>
       </div>
     </div>
 
@@ -321,6 +344,28 @@ footer{border-top:1px solid var(--line);background:var(--cream)}.foot{min-height
         <button class="photo-button" type="button" data-album="posters" data-photo="2"><img loading="lazy" src="lab-life-posters-03.jpg" alt="Shpilka Lab poster presentation"></button>
         <button class="photo-button" type="button" data-album="posters" data-photo="3"><img loading="lazy" src="lab-life-posters-04.jpg" alt="Shpilka Lab poster presentation"></button>
         <button class="photo-button" type="button" data-album="posters" data-photo="4"><img loading="lazy" src="lab-life-posters-05.jpg" alt="Shpilka Lab poster presentation"></button>
+      </div>
+    </div>
+
+    <div id="album-moments" class="album-view" aria-hidden="true">
+      <div class="album-head">
+        <div>
+          <button class="album-back" type="button" onclick="closeAlbum()">← All albums</button>
+          <p class="eyebrow">LAB LIFE · AROUND THE LAB · 2026</p>
+          <h2 class="page-title">Lab Moments</h2>
+          <p class="intro">Everyday moments, celebrations and time together in and around the Shpilka Lab.</p>
+        </div>
+        <div class="album-count">7 photos</div>
+      </div>
+
+      <div class="photo-grid" aria-label="Lab Moments photo gallery">
+        <button class="photo-button" type="button" data-album="moments" data-photo="0"><img loading="lazy" src="lab-life-moments-01.jpg" alt="Shpilka Lab moment"></button>
+        <button class="photo-button" type="button" data-album="moments" data-photo="1"><img loading="lazy" src="lab-life-moments-02.jpg" alt="Shpilka Lab moment"></button>
+        <button class="photo-button" type="button" data-album="moments" data-photo="2"><img loading="lazy" src="lab-life-moments-03.jpg" alt="Shpilka Lab moment"></button>
+        <button class="photo-button" type="button" data-album="moments" data-photo="3"><img loading="lazy" src="lab-life-moments-04.jpg" alt="Shpilka Lab moment"></button>
+        <button class="photo-button" type="button" data-album="moments" data-photo="4"><img loading="lazy" src="lab-life-moments-05.jpg" alt="Shpilka Lab moment"></button>
+        <button class="photo-button" type="button" data-album="moments" data-photo="5"><img loading="lazy" src="lab-life-moments-06.jpg" alt="Shpilka Lab moment"></button>
+        <button class="photo-button" type="button" data-album="moments" data-photo="6"><img loading="lazy" src="lab-life-moments-07.jpg" alt="Shpilka Lab moment"></button>
       </div>
     </div>
   </div>
@@ -381,6 +426,15 @@ const photoAlbums={
     'lab-life-posters-03.jpg',
     'lab-life-posters-04.jpg',
     'lab-life-posters-05.jpg'
+  ],
+  'moments':[
+    'lab-life-moments-01.jpg',
+    'lab-life-moments-02.jpg',
+    'lab-life-moments-03.jpg',
+    'lab-life-moments-04.jpg',
+    'lab-life-moments-05.jpg',
+    'lab-life-moments-06.jpg',
+    'lab-life-moments-07.jpg'
   ]
 };
 let activeLightboxAlbum='setting-up';
