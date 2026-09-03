@@ -317,6 +317,25 @@ footer{border-top:1px solid var(--line);background:var(--cream)}.foot{min-height
             <button class="album-open-link" type="button" onclick="openAlbum('research-experience')">Open album →</button>
           </div>
         </article>
+
+        <article class="album-card">
+          <button class="album-open" type="button" onclick="openAlbum('outdoors')" aria-label="Open Outdoors album">
+            <span class="album-kicker">OUTSIDE THE LAB · 2026</span>
+            <span class="album-title">Outdoors</span>
+            <span class="album-desc">Lab time beyond the bench — outside, together and away from the usual routine.</span>
+          </button>
+
+          <div class="album-strip" aria-label="Scroll through Outdoors photos">
+            <button class="album-thumb" type="button" data-album="outdoors" data-photo="0" aria-label="Open Outdoors photo 1"><img loading="lazy" src="lab-life-outdoors-01.jpg" alt="Shpilka Lab outdoors"></button>
+            <button class="album-thumb" type="button" data-album="outdoors" data-photo="1" aria-label="Open Outdoors photo 2"><img loading="lazy" src="lab-life-outdoors-02.jpg" alt="Shpilka Lab outdoors"></button>
+            <button class="album-thumb" type="button" data-album="outdoors" data-photo="2" aria-label="Open Outdoors photo 3"><img loading="lazy" src="lab-life-outdoors-03.jpg" alt="Shpilka Lab outdoors"></button>
+          </div>
+
+          <div class="album-footer">
+            <span>3 photos · scroll above</span>
+            <button class="album-open-link" type="button" onclick="openAlbum('outdoors')">Open album →</button>
+          </div>
+        </article>
       </div>
     </div>
 
@@ -413,6 +432,23 @@ footer{border-top:1px solid var(--line);background:var(--cream)}.foot{min-height
         <button class="photo-button" type="button" data-album="research-experience" data-photo="6"><img loading="lazy" src="lab-life-research-experience-07.jpg" alt="Experience in a Research Lab"></button>
       </div>
     </div>
+
+    <div id="album-outdoors" class="album-view" aria-hidden="true">
+      <div class="album-head">
+        <div>
+          <button class="album-back" type="button" onclick="closeAlbum()">← All albums</button>
+          <p class="eyebrow">LAB LIFE · OUTSIDE THE LAB · 2026</p>
+          <h2 class="page-title">Outdoors</h2>
+          <p class="intro">Lab time beyond the bench — outside, together and away from the usual routine.</p>
+        </div>
+        <div class="album-count">3 photos</div>
+      </div>
+      <div class="photo-grid" aria-label="Outdoors photo gallery">
+        <button class="photo-button" type="button" data-album="outdoors" data-photo="0"><img loading="lazy" src="lab-life-outdoors-01.jpg" alt="Shpilka Lab outdoors"></button>
+        <button class="photo-button" type="button" data-album="outdoors" data-photo="1"><img loading="lazy" src="lab-life-outdoors-02.jpg" alt="Shpilka Lab outdoors"></button>
+        <button class="photo-button" type="button" data-album="outdoors" data-photo="2"><img loading="lazy" src="lab-life-outdoors-03.jpg" alt="Shpilka Lab outdoors"></button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -489,6 +525,11 @@ const photoAlbums={
     'lab-life-research-experience-05.jpg',
     'lab-life-research-experience-06.jpg',
     'lab-life-research-experience-07.jpg'
+  ],
+  'outdoors':[
+    'lab-life-outdoors-01.jpg',
+    'lab-life-outdoors-02.jpg',
+    'lab-life-outdoors-03.jpg'
   ]
 };
 let activeLightboxAlbum='setting-up';
