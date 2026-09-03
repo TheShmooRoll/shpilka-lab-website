@@ -294,6 +294,28 @@ footer{border-top:1px solid var(--line);background:var(--cream)}.foot{min-height
             <button class="album-open-link" type="button" onclick="openAlbum('moments')">Open album →</button>
           </div>
         </article>
+
+        <article class="album-card">
+          <button class="album-open" type="button" onclick="openAlbum('research-experience')" aria-label="Open Experience in a Research Lab album">
+            <span class="album-kicker">RESEARCH EXPERIENCE · 2026</span>
+            <span class="album-title">Experience in a Research Lab</span>
+            <span class="album-desc">Presenting, discussing and experiencing research in a real lab environment.</span>
+          </button>
+
+          <div class="album-strip" aria-label="Scroll through Experience in a Research Lab photos">
+            <button class="album-thumb" type="button" data-album="research-experience" data-photo="0" aria-label="Open Experience in a Research Lab photo 1"><img loading="lazy" src="lab-life-research-experience-01.jpg" alt="Experience in a Research Lab"></button>
+            <button class="album-thumb" type="button" data-album="research-experience" data-photo="1" aria-label="Open Experience in a Research Lab photo 2"><img loading="lazy" src="lab-life-research-experience-02.jpg" alt="Experience in a Research Lab"></button>
+            <button class="album-thumb" type="button" data-album="research-experience" data-photo="2" aria-label="Open Experience in a Research Lab photo 3"><img loading="lazy" src="lab-life-research-experience-03.jpg" alt="Experience in a Research Lab"></button>
+            <button class="album-thumb" type="button" data-album="research-experience" data-photo="3" aria-label="Open Experience in a Research Lab photo 4"><img loading="lazy" src="lab-life-research-experience-04.jpg" alt="Experience in a Research Lab"></button>
+            <button class="album-thumb" type="button" data-album="research-experience" data-photo="4" aria-label="Open Experience in a Research Lab photo 5"><img loading="lazy" src="lab-life-research-experience-05.jpg" alt="Experience in a Research Lab"></button>
+            <button class="album-thumb" type="button" data-album="research-experience" data-photo="5" aria-label="Open Experience in a Research Lab photo 6"><img loading="lazy" src="lab-life-research-experience-06.jpg" alt="Experience in a Research Lab"></button>
+          </div>
+
+          <div class="album-footer">
+            <span>6 photos · scroll above</span>
+            <button class="album-open-link" type="button" onclick="openAlbum('research-experience')">Open album →</button>
+          </div>
+        </article>
       </div>
     </div>
 
@@ -368,6 +390,27 @@ footer{border-top:1px solid var(--line);background:var(--cream)}.foot{min-height
         <button class="photo-button" type="button" data-album="moments" data-photo="6"><img loading="lazy" src="lab-life-moments-07.jpg" alt="Shpilka Lab moment"></button>
       </div>
     </div>
+
+    <div id="album-research-experience" class="album-view" aria-hidden="true">
+      <div class="album-head">
+        <div>
+          <button class="album-back" type="button" onclick="closeAlbum()">← All albums</button>
+          <p class="eyebrow">LAB LIFE · RESEARCH EXPERIENCE · 2026</p>
+          <h2 class="page-title">Experience in a Research Lab</h2>
+          <p class="intro">Presenting, discussing and experiencing research in a real lab environment.</p>
+        </div>
+        <div class="album-count">6 photos</div>
+      </div>
+
+      <div class="photo-grid" aria-label="Experience in a Research Lab photo gallery">
+        <button class="photo-button" type="button" data-album="research-experience" data-photo="0"><img loading="lazy" src="lab-life-research-experience-01.jpg" alt="Experience in a Research Lab"></button>
+        <button class="photo-button" type="button" data-album="research-experience" data-photo="1"><img loading="lazy" src="lab-life-research-experience-02.jpg" alt="Experience in a Research Lab"></button>
+        <button class="photo-button" type="button" data-album="research-experience" data-photo="2"><img loading="lazy" src="lab-life-research-experience-03.jpg" alt="Experience in a Research Lab"></button>
+        <button class="photo-button" type="button" data-album="research-experience" data-photo="3"><img loading="lazy" src="lab-life-research-experience-04.jpg" alt="Experience in a Research Lab"></button>
+        <button class="photo-button" type="button" data-album="research-experience" data-photo="4"><img loading="lazy" src="lab-life-research-experience-05.jpg" alt="Experience in a Research Lab"></button>
+        <button class="photo-button" type="button" data-album="research-experience" data-photo="5"><img loading="lazy" src="lab-life-research-experience-06.jpg" alt="Experience in a Research Lab"></button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -435,6 +478,14 @@ const photoAlbums={
     'lab-life-moments-05.jpg',
     'lab-life-moments-06.jpg',
     'lab-life-moments-07.jpg'
+  ],
+  'research-experience':[
+    'lab-life-research-experience-01.jpg',
+    'lab-life-research-experience-02.jpg',
+    'lab-life-research-experience-03.jpg',
+    'lab-life-research-experience-04.jpg',
+    'lab-life-research-experience-05.jpg',
+    'lab-life-research-experience-06.jpg'
   ]
 };
 let activeLightboxAlbum='setting-up';
