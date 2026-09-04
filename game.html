@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Peroxisomes vs Mitochondria | Shpilka Lab</title>
+<style>
+:root{
+  --paper:#f7f2e6;--ink:#263b4b;--green:#698d54;--green2:#9ebb79;
+  --orange:#c96f2c;--orange2:#e5a35f;--blue:#5d8fa8;--purple:#806987;
+  --line:rgba(38,59,75,.18)
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-rounded,"Segoe UI",system-ui,sans-serif}
+body{min-height:100vh;padding:16px}
+.game-wrap{width:min(1120px,100%);margin:auto}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.title{font-size:clamp(1.35rem,3vw,2.2rem);font-weight:900;letter-spacing:-.03em}
+.title .p{color:var(--green)} .title .m{color:var(--orange)}
+.modebar{display:flex;gap:8px;flex-wrap:wrap}
+.pill{border:1px solid var(--line);background:rgba(255,255,255,.72);color:var(--ink);border-radius:999px;padding:9px 13px;font-weight:800;cursor:pointer}
+.pill.active{background:var(--ink);color:white}
+.arena-shell{position:relative;border:2px solid rgba(38,59,75,.25);border-radius:24px;overflow:hidden;background:#fbf7ec;box-shadow:0 18px 50px rgba(38,59,75,.10)}
+canvas{display:block;width:100%;aspect-ratio:5/3;touch-action:none}
+.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(247,242,230,.75);backdrop-filter:blur(3px);padding:20px;text-align:center}
+.overlay.hidden{display:none}
+.panel{max-width:560px;padding:24px;border:1px solid rgba(38,59,75,.18);border-radius:22px;background:rgba(255,255,255,.92);box-shadow:0 18px 50px rgba(38,59,75,.12)}
+.panel h2{margin:0 0 8px;font-size:clamp(1.6rem,4vw,2.7rem);line-height:1}
+.panel p{margin:8px 0 16px;color:#5d6f7c}
+.start{border:0;border-radius:999px;background:var(--ink);color:white;padding:13px 22px;font-weight:900;cursor:pointer;font-size:1rem}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;font-size:.85rem;color:#5b6c78}
+.legend div{padding:10px 12px;border:1px dashed rgba(38,59,75,.2);border-radius:14px;background:rgba(255,255,255,.55)}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px}
+.control-card{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.62);padding:13px}
+.control-title{display:flex;justify-content:space-between;gap:12px;align-items:center;font-weight:900;margin-bottom:10px}
+.keyhint{font-size:.78rem;color:#71818d;font-weight:750}
+.pad{display:grid;grid-template-columns:repeat(3,54px);grid-template-rows:repeat(2,48px);gap:6px;justify-content:center}
+.ctrl{border:1px solid rgba(38,59,75,.2);background:#fff;border-radius:12px;font-weight:900;color:var(--ink);touch-action:none;user-select:none}
+.ctrl:active,.ctrl.down{transform:translateY(1px);background:#e9eef0}
+.up{grid-column:2}.left{grid-column:1;grid-row:2}.down{grid-column:2;grid-row:2}.right{grid-column:3;grid-row:2}
+.fire{margin-top:8px;width:100%;height:42px;border:0;border-radius:999px;color:#fff;font-weight:950;touch-action:none;user-select:none}
+.perox .fire{background:var(--green)} .mito .fire{background:var(--orange)}
+.ai-note{display:none;font-size:.82rem;color:#71818d;text-align:center;padding:10px}
+body.ai .mito .pad,body.ai .mito .fire{display:none}
+body.ai .mito .ai-note{display:block}
+.footer-note{text-align:center;margin:12px auto 0;color:#687985;font-size:.82rem;max-width:780px}
+@media(max-width:760px){
+  body{padding:8px}
+  .controls{grid-template-columns:1fr;gap:8px}
+  .control-card{padding:10px}
+  .pad{grid-template-columns:repeat(3,48px);grid-template-rows:repeat(2,44px)}
+  .legend{grid-template-columns:1fr}
+  canvas{aspect-ratio:4/3}
+}
+</style>
+</head>
+<body class="ai">
+<div class="game-wrap">
+  <div class="topbar">
+    <div class="title"><span class="p">Peroxisomes</span> vs <span class="m">Mitochondria</span></div>
+    <div class="modebar">
+      <button class="pill active" id="onePlayer">1 Player vs AI</button>
+      <button class="pill" id="twoPlayer">2 Players</button>
+      <button class="pill" id="restartBtn">Restart</button>
+    </div>
+  </div>
+
+  <div class="arena-shell">
+    <canvas id="game" width="1000" height="600" aria-label="Peroxisomes versus Mitochondria arcade game"></canvas>
+    <div class="overlay" id="overlay">
+      <div class="panel">
+        <h2>Organelle showdown.</h2>
+        <p>Move, dodge and fire. Peroxisomes launch crystal bolts. Mitochondria throw spinning cristae.</p>
+        <button class="start" id="startBtn">Start game</button>
+        <div class="legend">
+          <div><b>Peroxisome</b><br>W A S D · F to fire</div>
+          <div><b>Mitochondrion</b><br>Arrow keys · Enter to fire</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="control-card perox">
+      <div class="control-title"><span>Peroxisome</span><span class="keyhint">WASD + F</span></div>
+      <div class="pad">
+        <button class="ctrl up" data-vkey="w">▲</button>
+        <button class="ctrl left" data-vkey="a">◀</button>
+        <button class="ctrl down" data-vkey="s">▼</button>
+        <button class="ctrl right" data-vkey="d">▶</button>
+      </div>
+      <button class="fire" data-vkey="f">FIRE CRYSTAL</button>
+    </div>
+
+    <div class="control-card mito">
+      <div class="control-title"><span>Mitochondrion</span><span class="keyhint">ARROWS + ENTER</span></div>
+      <div class="pad">
+        <button class="ctrl up" data-vkey="arrowup">▲</button>
+        <button class="ctrl left" data-vkey="arrowleft">◀</button>
+        <button class="ctrl down" data-vkey="arrowdown">▼</button>
+        <button class="ctrl right" data-vkey="arrowright">▶</button>
+      </div>
+      <button class="fire" data-vkey="enter">FIRE CRISTA</button>
+      <div class="ai-note">AI is controlling the mitochondrion.</div>
+    </div>
+  </div>
+
+  <div class="footer-note">Cartoon biology, not a mechanistic model. Built for the Shpilka Lab website.</div>
+</div>
+
+<script>
+const canvas=document.getElementById('game');
+const ctx=canvas.getContext('2d');
+const W=1000,H=600;
+const keys=new Set();
+let mode='ai';
+let running=false;
+let gameOver=false;
+let last=performance.now();
+let elapsed=0;
+let winner='';
+let shake=0;
+
+const P={x:140,y:320,hp:100,maxHp:100,r:46,speed:280,cool:0,flash:0};
+const M={x:860,y:320,hp:100,maxHp:100,r:52,speed:250,cool:0,flash:0};
+let shots=[];
+let sparks=[];
+
+function reset(){
+  Object.assign(P,{x:140,y:320,hp:100,cool:0,flash:0});
+  Object.assign(M,{x:860,y:320,hp:100,cool:0,flash:0});
+  shots=[]; sparks=[]; elapsed=0; winner=''; gameOver=false; shake=0;
+}
+function start(){
+  reset(); running=true;
+  document.getElementById('overlay').classList.add('hidden');
+}
+function endGame(name){
+  gameOver=true; running=false; winner=name;
+  const ov=document.getElementById('overlay');
+  ov.classList.remove('hidden');
+  ov.querySelector('h2').textContent=name+' wins!';
+  ov.querySelector('p').textContent='The cytosol survives another round.';
+  document.getElementById('startBtn').textContent='Play again';
+}
+
+function setMode(m){
+  mode=m;
+  document.body.classList.toggle('ai',mode==='ai');
+  document.getElementById('onePlayer').classList.toggle('active',mode==='ai');
+  document.getElementById('twoPlayer').classList.toggle('active',mode==='two');
+  reset();
+  running=false;
+  const ov=document.getElementById('overlay');
+  ov.classList.remove('hidden');
+  ov.querySelector('h2').textContent='Organelle showdown.';
+  ov.querySelector('p').textContent='Move, dodge and fire. Peroxisomes launch crystal bolts. Mitochondria throw spinning cristae.';
+  document.getElementById('startBtn').textContent='Start game';
+}
+
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+function hitCircle(ax,ay,ar,bx,by,br){const dx=ax-bx,dy=ay-by;return dx*dx+dy*dy<(ar+br)*(ar+br)}
+
+function fireP(){
+  if(P.cool>0||!running)return;
+  P.cool=.34;
+  shots.push({kind:'crystal',x:P.x+48,y:P.y,vx:520,vy:0,r:13,damage:12,spin:0});
+}
+function fireM(){
+  if(M.cool>0||!running)return;
+  M.cool=.46;
+  shots.push({kind:'crista',x:M.x-52,y:M.y,vx:-430,vy:0,r:18,damage:15,spin:0});
+}
+function burst(x,y,color,n=9){
+  for(let i=0;i<n;i++){
+    const a=Math.random()*Math.PI*2,s=70+Math.random()*160;
+    sparks.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:.45+Math.random()*.35,color});
+  }
+}
+
+function playerInput(dt){
+  let dx=0,dy=0;
+  if(keys.has('w'))dy--;
+  if(keys.has('s'))dy++;
+  if(keys.has('a'))dx--;
+  if(keys.has('d'))dx++;
+  if(dx||dy){const l=Math.hypot(dx,dy)||1;P.x+=dx/l*P.speed*dt;P.y+=dy/l*P.speed*dt}
+  P.x=clamp(P.x,60,455);P.y=clamp(P.y,100,545);
+  if(keys.has('f'))fireP();
+
+  if(mode==='two'){
+    dx=0;dy=0;
+    if(keys.has('arrowup'))dy--;
+    if(keys.has('arrowdown'))dy++;
+    if(keys.has('arrowleft'))dx--;
+    if(keys.has('arrowright'))dx++;
+    if(dx||dy){const l=Math.hypot(dx,dy)||1;M.x+=dx/l*M.speed*dt;M.y+=dy/l*M.speed*dt}
+    M.x=clamp(M.x,545,940);M.y=clamp(M.y,100,545);
+    if(keys.has('enter'))fireM();
+  }else{
+    aiInput(dt);
+  }
+}
+
+let aiJitter=0,aiDir=1;
+function aiInput(dt){
+  aiJitter-=dt;
+  if(aiJitter<=0){aiJitter=.35+Math.random()*.55;aiDir=Math.random()<.5?-1:1}
+  let target=P.y+aiDir*55;
+  const incoming=shots.find(s=>s.kind==='crystal'&&s.x>M.x-270&&s.x<M.x&&Math.abs(s.y-M.y)<70);
+  if(incoming)target=M.y+(incoming.y<M.y?95:-95);
+  const dy=target-M.y;
+  M.y+=clamp(dy,-1,1)*M.speed*.72*dt;
+  const idealX=780+Math.sin(elapsed*.8)*55;
+  M.x+=clamp(idealX-M.x,-1,1)*M.speed*.32*dt;
+  M.x=clamp(M.x,585,940);M.y=clamp(M.y,100,545);
+  if(Math.abs(P.y-M.y)<95 && M.cool<=0 && Math.random()<dt*2.4)fireM();
+}
+
+function update(dt){
+  elapsed+=dt;
+  P.cool=Math.max(0,P.cool-dt);M.cool=Math.max(0,M.cool-dt);
+  P.flash=Math.max(0,P.flash-dt);M.flash=Math.max(0,M.flash-dt);
+  shake=Math.max(0,shake-dt*3);
+  playerInput(dt);
+
+  for(const s of shots){
+    s.x+=s.vx*dt;s.y+=s.vy*dt;s.spin+=dt*8;
+    if(s.kind==='crystal'&&hitCircle(s.x,s.y,s.r,M.x,M.y,M.r*.72)){
+      M.hp=Math.max(0,M.hp-s.damage);M.flash=.16;s.dead=true;shake=.25;burst(s.x,s.y,'#698d54',11);
+    }
+    if(s.kind==='crista'&&hitCircle(s.x,s.y,s.r,P.x,P.y,P.r*.82)){
+      P.hp=Math.max(0,P.hp-s.damage);P.flash=.16;s.dead=true;shake=.25;burst(s.x,s.y,'#c96f2c',12);
+    }
+    if(s.x<-60||s.x>W+60)s.dead=true;
+  }
+  shots=shots.filter(s=>!s.dead);
+
+  for(const q of sparks){q.x+=q.vx*dt;q.y+=q.vy*dt;q.vx*=.96;q.vy*=.96;q.life-=dt}
+  sparks=sparks.filter(q=>q.life>0);
+
+  if(P.hp<=0&&!gameOver)endGame('Mitochondrion');
+  if(M.hp<=0&&!gameOver)endGame('Peroxisome');
+}
+
+function paper(){
+  ctx.fillStyle='#f7f2e6';ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(38,59,75,.035)';ctx.lineWidth=1;
+  for(let y=55;y<H;y+=38){ctx.beginPath();ctx.moveTo(0,y+Math.sin(y)*2);ctx.lineTo(W,y);ctx.stroke()}
+  for(let i=0;i<70;i++){
+    const x=(i*137)%W,y=(i*83)%H;
+    ctx.fillStyle='rgba(38,59,75,.045)';ctx.beginPath();ctx.arc(x,y,1.5,0,Math.PI*2);ctx.fill();
+  }
+  ctx.setLineDash([9,12]);ctx.strokeStyle='rgba(38,59,75,.12)';ctx.beginPath();ctx.moveTo(W/2,96);ctx.lineTo(W/2,H-30);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='rgba(38,59,75,.20)';ctx.font='800 15px ui-rounded,system-ui';ctx.textAlign='center';ctx.fillText('CYTOSOL',W/2,122);
+}
+
+function hpBar(x,y,w,h,hp,color,label,align='left'){
+  ctx.fillStyle='rgba(255,255,255,.78)';roundRect(x,y,w,h,14,true,false);
+  ctx.strokeStyle='rgba(38,59,75,.16)';ctx.lineWidth=1.5;roundRect(x,y,w,h,14,false,true);
+  const pad=5,fill=(w-pad*2)*(hp/100);
+  ctx.fillStyle=color;roundRect(align==='left'?x+pad:x+w-pad-fill,y+pad,fill,h-pad*2,9,true,false);
+  ctx.fillStyle='#263b4b';ctx.font='900 15px ui-rounded,system-ui';ctx.textAlign=align;ctx.fillText(label,align==='left'?x:x+w,y-9);
+}
+function roundRect(x,y,w,h,r,fill,stroke){
+  if(w<0)w=0;
+  ctx.beginPath();ctx.roundRect(x,y,w,h,r);if(fill)ctx.fill();if(stroke)ctx.stroke();
+}
+
+function sketchCircle(x,y,r,stroke,fill){
+  ctx.fillStyle=fill;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle=stroke;ctx.lineWidth=3;
+  for(let k=0;k<2;k++){ctx.beginPath();ctx.arc(x+(k?1:-1),y+(k?-1:1),r+(k?0:-1.5),0,Math.PI*2);ctx.stroke()}
+}
+
+function drawPerox(){
+  ctx.save();ctx.translate(P.x,P.y);
+  if(P.flash>0){ctx.shadowColor='#fff';ctx.shadowBlur=22}
+  sketchCircle(0,0,P.r,'#496b3d','#b9cc97');
+  ctx.fillStyle='rgba(73,107,61,.28)';
+  [[-18,-18,5],[12,-20,4],[20,9,5],[-16,17,3],[2,20,4],[-2,-5,3]].forEach(d=>{ctx.beginPath();ctx.arc(...d,0,Math.PI*2);ctx.fill()});
+  // face
+  ctx.fillStyle='#263b4b';ctx.beginPath();ctx.arc(-13,-5,4,0,Math.PI*2);ctx.arc(13,-5,4,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#263b4b';ctx.lineWidth=2.4;ctx.beginPath();ctx.arc(0,4,16,.25,Math.PI-.25);ctx.stroke();
+  // arms
+  ctx.beginPath();ctx.moveTo(-43,7);ctx.quadraticCurveTo(-57,1,-62,13);ctx.moveTo(43,7);ctx.quadraticCurveTo(58,0,63,12);ctx.stroke();
+  ctx.restore();
+}
+
+function drawMito(){
+  ctx.save();ctx.translate(M.x,M.y);
+  if(M.flash>0){ctx.shadowColor='#fff';ctx.shadowBlur=22}
+  ctx.rotate(-.07);
+  ctx.fillStyle='#efb16d';ctx.strokeStyle='#9d5421';ctx.lineWidth=3;
+  ctx.beginPath();ctx.ellipse(0,0,58,40,0,0,Math.PI*2);ctx.fill();ctx.stroke();
+  ctx.strokeStyle='#a95c26';ctx.lineWidth=3;
+  const ys=[-22,-10,2,14,24];
+  ys.forEach((yy,i)=>{
+    ctx.beginPath();ctx.moveTo(-34,yy);
+    ctx.bezierCurveTo(-18,yy-12,3,yy+11,27,yy-4);
+    ctx.stroke();
+  });
+  ctx.fillStyle='#263b4b';ctx.beginPath();ctx.arc(-13,-5,4,0,Math.PI*2);ctx.arc(13,-5,4,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle='#263b4b';ctx.lineWidth=2.4;ctx.beginPath();ctx.arc(0,5,16,.2,Math.PI-.2);ctx.stroke();
+  ctx.restore();
+}
+
+function drawCrystal(s){
+  ctx.save();ctx.translate(s.x,s.y);ctx.rotate(s.spin*.35);
+  ctx.fillStyle='#b8d9d9';ctx.strokeStyle='#4b8490';ctx.lineWidth=2.5;
+  ctx.beginPath();ctx.moveTo(14,0);ctx.lineTo(5,11);ctx.lineTo(-9,8);ctx.lineTo(-14,0);ctx.lineTo(-5,-11);ctx.lineTo(9,-8);ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.strokeStyle='rgba(255,255,255,.8)';ctx.beginPath();ctx.moveTo(-5,-7);ctx.lineTo(6,5);ctx.stroke();
+  ctx.restore();
+}
+function drawCrista(s){
+  ctx.save();ctx.translate(s.x,s.y);ctx.rotate(s.spin);
+  ctx.strokeStyle='#9d5421';ctx.fillStyle='#e6a15b';ctx.lineWidth=2.5;
+  ctx.beginPath();
+  for(let i=0;i<8;i++){
+    const a=i*Math.PI/4,r=i%2?7:19;
+    const x=Math.cos(a)*r,y=Math.sin(a)*r;
+    if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }
+  ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.strokeStyle='#fff5de';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-10,0);ctx.bezierCurveTo(-4,-8,4,8,10,0);ctx.stroke();
+  ctx.restore();
+}
+
+function drawSparks(){
+  for(const q of sparks){
+    ctx.globalAlpha=Math.max(0,q.life*2);
+    ctx.fillStyle=q.color;ctx.beginPath();ctx.arc(q.x,q.y,3.2,0,Math.PI*2);ctx.fill();
+  }
+  ctx.globalAlpha=1;
+}
+function draw(){
+  ctx.save();
+  if(shake>0)ctx.translate((Math.random()-.5)*shake*14,(Math.random()-.5)*shake*14);
+  paper();
+  hpBar(46,48,360,27,P.hp,'#698d54','PEROXISOME','left');
+  hpBar(W-406,48,360,27,M.hp,'#c96f2c','MITOCHONDRION','right');
+
+  ctx.fillStyle='#71818d';ctx.font='800 13px ui-rounded,system-ui';ctx.textAlign='center';
+  ctx.fillText('CRYSTAL BOLT',175,92);ctx.fillText('SPINNING CRISTA',825,92);
+
+  drawPerox();drawMito();
+  for(const s of shots)s.kind==='crystal'?drawCrystal(s):drawCrista(s);
+  drawSparks();
+
+  ctx.fillStyle='rgba(38,59,75,.55)';ctx.font='800 14px ui-rounded,system-ui';ctx.textAlign='center';
+  ctx.fillText(mode==='ai'?'1 PLAYER vs AI':'2 PLAYER',W/2,H-18);
+  ctx.restore();
+}
+
+function loop(t){
+  const dt=Math.min(.033,(t-last)/1000);last=t;
+  if(running)update(dt);
+  draw();
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+function normKey(e){
+  const k=e.key.toLowerCase();
+  if(k===' ')return 'space';
+  return k;
+}
+addEventListener('keydown',e=>{
+  const k=normKey(e);
+  if(['w','a','s','d','f','arrowup','arrowdown','arrowleft','arrowright','enter'].includes(k))e.preventDefault();
+  keys.add(k);
+  if(k==='r')start();
+});
+addEventListener('keyup',e=>keys.delete(normKey(e)));
+addEventListener('blur',()=>keys.clear());
+
+document.querySelectorAll('[data-vkey]').forEach(btn=>{
+  const k=btn.dataset.vkey;
+  const down=e=>{e.preventDefault();keys.add(k);btn.classList.add('down')};
+  const up=e=>{e.preventDefault();keys.delete(k);btn.classList.remove('down')};
+  btn.addEventListener('pointerdown',down);
+  btn.addEventListener('pointerup',up);
+  btn.addEventListener('pointercancel',up);
+  btn.addEventListener('pointerleave',up);
+});
+document.getElementById('startBtn').onclick=start;
+document.getElementById('restartBtn').onclick=start;
+document.getElementById('onePlayer').onclick=()=>setMode('ai');
+document.getElementById('twoPlayer').onclick=()=>setMode('two');
+</script>
+</body>
+</html>
