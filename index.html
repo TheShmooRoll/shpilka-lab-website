@@ -15,9 +15,37 @@ main{min-height:calc(100vh - 174px)}.tab-panel{display:none;animation:fade .22s 
 .page{padding:76px 0 96px}.eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;font-weight:850;color:var(--blue);margin:0 0 18px}.page-title{font-size:clamp(2.8rem,5vw,5.3rem);line-height:.96;letter-spacing:-.055em;color:var(--navy);margin:0 0 20px}.intro{font-size:1.08rem;color:var(--muted);max-width:780px}
 .hero{min-height:680px;display:grid;grid-template-columns:.94fr 1.06fr;align-items:center;gap:55px;padding:72px 0}.hero h1{margin:0;color:var(--navy);font-size:clamp(3.5rem,6vw,6.7rem);line-height:.91;letter-spacing:-.06em}.hero h1 span{background:linear-gradient(90deg,var(--orange),#e79269 46%,var(--teald));background-clip:text;-webkit-background-clip:text;color:transparent}.lead{font-size:clamp(1.05rem,1.45vw,1.25rem);color:#536b7f;max-width:650px;margin:28px 0 32px}.actions{display:flex;gap:12px;flex-wrap:wrap}.button{display:inline-flex;padding:13px 20px;border-radius:999px;font-size:.9rem;font-weight:800;border:1px solid var(--line);cursor:pointer}.primary{background:var(--navy);color:#fff;border-color:var(--navy)}.secondary{background:#fff}
 
-/* Pencil ATFS-1 movie - replaces only the old spinning organelle scene */
-.scene{height:480px;position:relative;display:grid;place-items:center}.pencil-movie{position:relative;width:min(610px,100%);aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:#f7f4ee;border:1px solid rgba(16,43,78,.09);box-shadow:0 18px 48px rgba(31,73,104,.09)}.pencil-frame{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;animation:pencilMovie 18s linear infinite;transform:scale(1.015);filter:contrast(.97) saturate(0)}.pencil-frame:nth-child(1){animation-delay:0s}.pencil-frame:nth-child(2){animation-delay:3s}.pencil-frame:nth-child(3){animation-delay:6s}.pencil-frame:nth-child(4){animation-delay:9s}.pencil-frame:nth-child(5){animation-delay:12s}.pencil-frame:nth-child(6){animation-delay:15s}
-@keyframes pencilMovie{0%{opacity:0;transform:scale(1.02)}4%{opacity:1}13%{opacity:1;transform:scale(1.00)}16.6%{opacity:0}100%{opacity:0}}
+/* Pencil organelle-stress hero */
+.scene{height:480px;position:relative;display:grid;place-items:center}
+.pencil-movie{
+  position:relative;
+  width:min(650px,100%);
+  aspect-ratio:16/9;
+  border-radius:22px;
+  overflow:hidden;
+  background:#f8f5ef;
+  border:1px solid rgba(16,43,78,.09);
+  box-shadow:0 18px 48px rgba(31,73,104,.09)
+}
+.pencil-frame{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  opacity:0;
+  animation:pencilPair 14s ease-in-out infinite;
+  filter:contrast(.98) saturate(.28)
+}
+.pencil-frame:nth-child(1){animation-delay:0s}
+.pencil-frame:nth-child(2){animation-delay:7s}
+@keyframes pencilPair{
+  0%{opacity:0;transform:scale(1.012)}
+  6%{opacity:1}
+  44%{opacity:1;transform:scale(1)}
+  50%{opacity:0}
+  100%{opacity:0}
+}4%{opacity:1}13%{opacity:1;transform:scale(1.00)}16.6%{opacity:0}100%{opacity:0}}
 
 
 .research-sections{display:grid;gap:28px;margin-top:44px}.research-feature{border:1px solid var(--line);border-radius:28px;padding:36px;background:#fff;box-shadow:0 14px 42px rgba(31,73,104,.07)}.research-feature.peroxisome-feature{background:linear-gradient(145deg,#edfbfa,#fff);display:grid;grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr);gap:38px;align-items:center}.research-feature.mito-feature{background:linear-gradient(145deg,#fff2eb,#fff)}.research-main{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(320px,.92fr);gap:38px;align-items:center}.research-copy h3{margin:0 0 18px;color:var(--navy);font-size:clamp(1.8rem,2.8vw,2.4rem);line-height:1.05}.research-copy p{margin:0;color:#5f768a;font-size:1rem}.research-kicker{display:inline-block;margin-bottom:14px;color:var(--blue);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;font-weight:850}.research-visual{min-height:340px;display:flex;align-items:center;justify-content:center}.research-visual img{width:100%;max-width:100%;max-height:100%;object-fit:contain;border-radius:18px;background:#fff}.research-tags{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:13px;margin-top:30px;padding-top:26px;border-top:1px solid rgba(16,43,78,.09)}.research-tag{min-height:108px;padding:16px 14px 14px;border-radius:20px;border:1px solid rgba(16,43,78,.09);box-shadow:0 8px 22px rgba(31,73,104,.06);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;text-align:center;color:var(--navy)}.research-tag svg{width:52px;height:42px;display:block;overflow:visible}.research-tag svg *{vector-effect:non-scaling-stroke}.research-tag span{font-weight:820;font-size:.92rem;letter-spacing:.005em}.research-tag.aging{background:linear-gradient(145deg,#fff9ed,#f4ecdc)}.research-tag.cancer{background:linear-gradient(145deg,#fff1f0,#f8dfe1)}.research-tag.neuro{background:linear-gradient(145deg,#f2f5ff,#e3e9f7)}.research-tag.development{background:linear-gradient(145deg,#f4fbef,#e4f2dc)}.research-tag.communication{background:linear-gradient(145deg,#edfafa,#d9f0ef)}.research-tag.biogenesis{background:linear-gradient(145deg,#fff5ec,#f7e4d6)}.research-tag.maturation{background:linear-gradient(145deg,#f4f1fb,#e7e0f2)}.research-tag .line{fill:none;stroke:#355e78;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.research-tag .soft{fill:none;stroke:#6aaeb2;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.research-tag .warm{fill:none;stroke:#d77b59;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -31,7 +59,7 @@ main{min-height:calc(100vh - 174px)}.tab-panel{display:none;animation:fade .22s 
 footer{border-top:1px solid var(--line);background:var(--cream)}.foot{min-height:96px;display:flex;align-items:center;justify-content:space-between;gap:18px;color:#758897;font-size:.82rem}.footbrand{display:flex;align-items:center;gap:10px}.footbrand img{width:52px;height:52px;object-fit:contain}.footlinks{display:flex;gap:16px}.foot a{color:var(--blue);font-weight:750}
 @media(max-width:980px){.albums{grid-template-columns:repeat(2,minmax(0,1fr))}.research-feature.peroxisome-feature,.research-main{grid-template-columns:1fr}.research-visual{min-height:300px}.research-visual img{min-height:300px}.research-tags{grid-template-columns:repeat(2,minmax(0,1fr))}.funding{grid-template-columns:1fr;text-align:center}.funding-copy p{margin-left:auto;margin-right:auto}.funders{justify-content:center}.head{align-items:flex-start;padding:12px 0;flex-direction:column}.tabs{width:100%}.hero{grid-template-columns:1fr;text-align:center}.lead{margin-left:auto;margin-right:auto}.actions{justify-content:center}.people-grid{grid-template-columns:repeat(2,1fr)}.join-grid,.contact-grid{grid-template-columns:1fr}.pubtop{align-items:flex-start;flex-direction:column}.album-head{align-items:flex-start;flex-direction:column}.album-count{align-self:flex-start}}
 @media(max-width:760px){.albums{grid-template-columns:1fr}.album-title{font-size:1.25rem}.album-thumb{flex-basis:84px;height:108px}.funding{width:calc(100% - 28px);padding:26px 20px;margin-bottom:52px}.funders{gap:18px;flex-wrap:wrap}.funder{min-width:120px}.funder.isf img{height:58px}.funder.bsf img{height:72px}.wrap{width:min(100% - 28px,1180px)}.brand img{width:60px;height:60px}.hero{padding:42px 0}.hero h1{font-size:3.45rem}.scene{height:390px}.research-feature{padding:24px}.research-main,.research-feature.peroxisome-feature{gap:24px}.research-visual,.research-visual img{min-height:250px}.research-tags{grid-template-columns:1fr 1fr}.research-tag{min-height:96px;padding:13px 10px}.research-tag svg{width:46px;height:38px}.research-tag span{font-size:.86rem}.people-grid{grid-template-columns:1fr}.pub-year{grid-template-columns:1fr}.page{padding:54px 0 76px}.foot{padding:22px 0;flex-direction:column;align-items:flex-start}.footlinks{flex-wrap:wrap}.photo-grid{columns:2 145px;column-gap:10px}.photo-button{margin-bottom:10px;border-radius:13px}.lightbox{padding:18px}.lightbox-prev,.lightbox-next{width:42px;height:58px;font-size:1.8rem}.lightbox-prev{left:8px}.lightbox-next{right:8px}.lightbox-close{top:10px;right:10px}.pencil-movie{width:100%}}
-@media(prefers-reduced-motion:reduce){.tab-panel{animation:none}.album-card,.album-thumb img,.photo-button img{transition:none}.pencil-frame{animation:none;opacity:0}.pencil-frame:first-child{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.pencil-frame{animation:none;opacity:0}.pencil-frame:first-child{opacity:1;transform:none}}.album-card,.album-thumb img,.photo-button img{transition:none}.pencil-frame{animation:none;opacity:0}.pencil-frame:first-child{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -56,14 +84,9 @@ footer{border-top:1px solid var(--line);background:var(--cream)}.foot{min-height
   <div class="wrap hero">
     <div><p class="eyebrow">HEBREW UNIVERSITY OF JERUSALEM · FACULTY OF MEDICINE</p><h1>How organelles <span>talk, adapt & survive.</span></h1><p class="lead">We investigate how cells sense and adapt to mitochondrial and peroxisomal stress, how organelles communicate with one another, and how these pathways shape physiology, aging and disease.</p><div class="actions"><button class="button primary" data-tab="research">Explore our research</button><button class="button secondary" data-tab="people">Meet the lab</button></div></div>
     <div class="scene">
-      <div class="pencil-movie" aria-label="Pencil animation illustrating the ATFS-1 mitochondrial stress response">
-        <img class="pencil-frame" src="atfs1-frame-1.jpg" alt="ATFS-1 is translated in the cytoplasm and imported into healthy mitochondria">
-        <img class="pencil-frame" src="atfs1-frame-2.jpg" alt="During mitochondrial stress ATFS-1 import becomes inefficient">
-        <img class="pencil-frame" src="atfs1-frame-3.jpg" alt="Non-imported ATFS-1 traffics toward the nucleus">
-        <img class="pencil-frame" src="atfs1-frame-4.jpg" alt="Nuclear ATFS-1 activates transcription">
-        <img class="pencil-frame" src="atfs1-frame-5.jpg" alt="mRNA exits the nucleus and is translated by cytoplasmic ribosomes">
-        <img class="pencil-frame" src="atfs1-frame-6.jpg" alt="New proteins traffic back to mitochondria and support recovery">
-        
+      <div class="pencil-movie" aria-label="Pencil illustrations of mitochondrial and peroxisomal stress responses">
+        <img class="pencil-frame" src="mitochondrial-stress-pencil.jpg" alt="Pencil model of the ATFS-1 mitochondrial stress response">
+        <img class="pencil-frame" src="peroxisome-stress-pencil.jpg" alt="Pencil model of the peroxisomal stress response and nuclear transcriptional response">
       </div>
     </div>
   </div>
